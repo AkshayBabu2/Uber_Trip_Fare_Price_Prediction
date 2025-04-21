@@ -57,33 +57,38 @@ def get_season(month):
 pickup_location = st.text_input('Pickup Location')
 dropoff_location = st.text_input('Dropoff Location')
 
-if pickup_location and dropoff_location:
-    pickup_latitude, pickup_longitude = get_coordinates(pickup_location)
-    dropoff_latitude, dropoff_longitude = get_coordinates(dropoff_location)
+if st.button("Submit"):
+    if pickup_location and dropoff_location:
+        pickup_latitude, pickup_longitude = get_coordinates(pickup_location)
+        dropoff_latitude, dropoff_longitude = get_coordinates(dropoff_location)
 
-    if pickup_latitude is not None and dropoff_latitude is not None:
-        current_datetime = datetime.now()
-        
-        year = current_datetime.year
-        month = current_datetime.month
-        week_day = current_datetime.weekday()
-        hour = current_datetime.hour
-        season = get_season(month)
-        day_period = get_dayperiod(hour)
+        if pickup_latitude is not None and dropoff_latitude is not None:
+            current_datetime = datetime.now()
+            
+            year = current_datetime.year
+            month = current_datetime.month
+            week_day = current_datetime.weekday()
+            hour = current_datetime.hour
+            season = get_season(month)
+            day_period = get_dayperiod(hour)
 
-        # Calculate the distance
-        distance = get_distance(pickup_latitude, pickup_longitude, dropoff_latitude, dropoff_longitude)
+            # Calculate the distance
+            distance = get_distance(pickup_latitude, pickup_longitude, dropoff_latitude, dropoff_longitude)
 
-        # Prepare the data for prediction
-        input_data = pd.DataFrame([[1, year, month, week_day, hour, season, day_period, distance]],
-                                columns=['passenger_count', 'pickup_year', 'pickup_month', 'pickup_weekday',
-                                        'pickup_hour', 'pickup_Season', 'pickup_dayperiod', 'Distance'])
+            # Prepare the data for prediction
+            input_data = pd.DataFrame([[1, year, month, week_day, hour, season, day_period, distance]],
+                                    columns=['passenger_count', 'pickup_year', 'pickup_month', 'pickup_weekday',
+                                            'pickup_hour', 'pickup_Season', 'pickup_dayperiod', 'Distance'])
 
-        # Make the prediction
-        fare = model.predict(input_data)
+            # Make the prediction
+            fare = model.predict(input_data)
 
-        # Display the result
-        st.subheader(f"Distance from {pickup_location} to {dropoff_location}: {distance:.2f} km")
-        st.subheader(f"Predicted Fare: ${fare[0]}")
+            # Display the result
+            st.subheader(f"Distance from {pickup_location} to {dropoff_location}: {distance:.2f} km")
+            st.subheader(f"Predicted Fare: ${fare[0]}")
+        else:
+            st.error("Could not retrieve coordinates for the provided locations. Please check the inputs.")
     else:
-        st.error("Could not retrieve coordinates for the provided locations. Please check the inputs.")
+        st.error("Please enter both pickup and dropoff locations.")
+
+
