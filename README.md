@@ -6,7 +6,6 @@ This project is a Streamlit-based web app that predicts Uber trip fares based on
 ## 🌐 Live Demo
 
 🔗 [Click here to try the app](https://ubertripfarepriceprediction.streamlit.app/)  
-_Replace with your actual deployed URL_
 
 ---
 
@@ -29,10 +28,6 @@ _Replace with your actual deployed URL_
 
 This project is a Streamlit-based web app that predicts Uber trip fares based on user-input pickup and dropoff locations using a machine learning model.
 
-## 🌐 Live Demo
-
-🔗 [Click here to try the app](https://your-deployment-url.com)  
-_Replace with your actual deployed URL_
 
 ---
 
